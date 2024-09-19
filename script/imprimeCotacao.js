@@ -1,13 +1,28 @@
-const lista = document.querySelector("[data-lista]")
+const lista = document.querySelectorAll("[data-lista]");
 
-function imprimeCotacao(nome, valor) {
-  lista.innerHTML = ""
+function selecionaCotacao(nome, valor) {
+  lista.forEach((listaEscolhida) => {
+    if (listaEscolhida.id == nome) {
+      imprimeCotacao(listaEscolhida, nome, valor);
+    }
+  });
+}
 
-  for (let multiplicador = 1; multiplicador <= 1000; multiplicador *=10) {
-    const listaItem = document.createElement("li")
-    listaItem.innerHTML = `${multiplicador} ${nome} R$${(valor * multiplicador).toFixed(2)}`
-    lista.appendChild(listaItem)
+function imprimeCotacao(lista, nome, valor) {
+  lista.innerHTML = "";
+
+  const plurais = {
+    dolar: "dolares",
+    iene: "ienes"
+  }
+  
+  for (let multiplicador = 1; multiplicador <= 1000; multiplicador *= 10) {
+    const listaItem = document.createElement("li");
+    listaItem.innerHTML = `${multiplicador} ${multiplicador == 1 ? nome : plurais[nome]} R$${(
+      valor * multiplicador
+    ).toFixed(2)}`;
+    lista.appendChild(listaItem);
   }
 }
 
-export default imprimeCotacao
+export default selecionaCotacao;
